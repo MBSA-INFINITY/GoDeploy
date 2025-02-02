@@ -19,19 +19,15 @@ func Handler(w http.ResponseWriter, r *http.Request) {
 		// Parse template file
 		tmpl, err := template.ParseFiles(tmplPath)
 		if err != nil {
-			context.String(500, "Error loading template")
+			context.String(500, "Error loading templatessasasasas")
 			return
 		}
 
 		// Create a buffer to store rendered template output
 		var renderedTemplate bytes.Buffer
-		data := map[string]interface{}{
-			"Title":   "Welcome",
-			"Message": "Hello, Go from Vercel!",
-		}
 
 		// Execute template and write output to buffer
-		if err := tmpl.Execute(&renderedTemplate, data); err != nil {
+		if err := tmpl.Execute(&renderedTemplate, nil); err != nil {
 			context.String(500, "Error rendering template")
 			return
 		}
