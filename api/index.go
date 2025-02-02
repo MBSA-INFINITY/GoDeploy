@@ -1,39 +1,19 @@
 package handler
 
 import (
-	"bytes"
-	"html/template"
+	"fmt"
 	"net/http"
-	"path"
 
-	. "github.com/tbxark/g4vercel"
+	"github.com/gorilla/mux"
 )
 
-func Handler(w http.ResponseWriter, r *http.Request) {
-	server := New()
+func Handler(w http.ResponseWriter, req *http.Request) {
+	fmt.Println("This is MBSA's Expense Tracker")
 
-	server.GET("/", func(context *Context) {
-		// Define template path
-		tmplPath := path.Join("templates", "index.html")
-
-		// Parse template file
-		tmpl, err := template.ParseFiles(tmplPath)
-		if err != nil {
-			context.String(500, "Error loading templatessasasasas")
-			return
-		}
-
-		// Create a buffer to store rendered template output
-		var renderedTemplate bytes.Buffer
-
-		// Execute template and write output to buffer
-		if err := tmpl.Execute(&renderedTemplate, nil); err != nil {
-			context.String(500, "Error rendering template")
-			return
-		}
-
-		// Send rendered HTML as a response
-		context.HTML(200, renderedTemplate.String(), nil)
+	r := mux.NewRouter()
+	r.HandleFunc("/", func(w http.ResponseWriter, r *http.Request) {
+		w.Write([]byte("I am mbsaiaditya"))
 	})
-	server.Handle(w, r)
+	http.ListenAndServe(":8080", r)
+
 }
