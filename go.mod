@@ -1,8 +1,5 @@
-module expense-tracker
+module mbsapp
 
-go 1.23.4
+go 1.23.5
 
-require (
-	github.com/dgrijalva/jwt-go v3.2.0+incompatible
-	github.com/gorilla/mux v1.8.1
-)
+require github.com/gorilla/mux v1.8.1 // indirect
