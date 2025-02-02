@@ -1,6 +1,7 @@
 package handler
 
 import (
+	"bytes"
 	"html/template"
 	"net/http"
 	"path"
@@ -12,20 +13,31 @@ func Handler(w http.ResponseWriter, r *http.Request) {
 	server := New()
 
 	server.GET("/", func(context *Context) {
-		// context.JSON(200, H{
-		// 	"message": "hello go from vercel !!!!",
-		// })
-		fp := path.Join("templates", "index.html")
+		// Define template path
+		tmplPath := path.Join("templates", "index.html")
 
-		templ, err := template.ParseFiles(fp)
-
+		// Parse template file
+		tmpl, err := template.ParseFiles(tmplPath)
 		if err != nil {
-			http.Error(w, err.Error(), http.StatusInternalServerError)
+			context.String(500, "Error loading template")
+			return
 		}
 
-		if err := templ.Execute(w, nil); err != nil {
-			http.Error(w, err.Error(), http.StatusInternalServerError)
+		// Create a buffer to store rendered template output
+		var renderedTemplate bytes.Buffer
+		data := map[string]interface{}{
+			"Title":   "Welcome",
+			"Message": "Hello, Go from Vercel!",
 		}
+
+		// Execute template and write output to buffer
+		if err := tmpl.Execute(&renderedTemplate, data); err != nil {
+			context.String(500, "Error rendering template")
+			return
+		}
+
+		// Send rendered HTML as a response
+		context.HTML(200, renderedTemplate.String(), nil)
 	})
 	server.Handle(w, r)
 }
