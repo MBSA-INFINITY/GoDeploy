@@ -1,16 +1,29 @@
 package handler
 
 import (
-	"fmt"
 	"net/http"
+
+	. "github.com/tbxark/g4vercel"
 )
 
-func mbsa(w http.ResponseWriter, r *http.Request) {
-	fmt.Fprint(w, "<h1>Welcome to API by LearnCodeOnline</h1>")
-}
-
 func Handler(w http.ResponseWriter, r *http.Request) {
-	http.HandleFunc("/", mbsa)
-	http.ListenAndServe(":8080", nil)
+	server := New()
 
+	server.GET("/", func(context *Context) {
+		context.JSON(200, H{
+			"message": "hello go from vercel !!!!",
+		})
+		// fp := path.Join("templates", "index.html")
+
+		// templ, err := template.ParseFiles(fp)
+
+		// if err != nil {
+		// 	http.Error(w, err.Error(), http.StatusInternalServerError)
+		// }
+
+		// if err := templ.Execute(w, nil); err != nil {
+		// 	http.Error(w, err.Error(), http.StatusInternalServerError)
+		// }
+	})
+	server.Handle(w, r)
 }
