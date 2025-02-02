@@ -1,16 +1,16 @@
 package handler
 
 import (
+	"fmt"
 	"net/http"
-
-	"github.com/gorilla/mux"
 )
 
-func Handler(w http.ResponseWriter, req *http.Request) {
-	r := mux.NewRouter()
-	r.HandleFunc("/", func(w http.ResponseWriter, r *http.Request) {
-		w.Write([]byte("<h1>Welcome to API by LearnCodeOnline</h1>"))
-	})
-	http.ListenAndServe(":8080", r)
+func mbsa(w http.ResponseWriter, r *http.Request) {
+	fmt.Fprint(w, "<h1>Welcome to API by LearnCodeOnline</h1>")
+}
+
+func Handler(w http.ResponseWriter, r *http.Request) {
+	http.HandleFunc("/", mbsa)
+	http.ListenAndServe(":8080", nil)
 
 }
