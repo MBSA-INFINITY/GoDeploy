@@ -1,4 +1,4 @@
-package main
+package handler
 
 import (
 	"expense-tracker/auth"
@@ -9,7 +9,7 @@ import (
 	"github.com/gorilla/mux"
 )
 
-func main() {
+func Handler(w http.ResponseWriter, req *http.Request) {
 	fmt.Println("This is MBSA's Expense Tracker")
 
 	r := mux.NewRouter()
